@@ -39,14 +39,14 @@ The new pipeline include below steps,
 3. Impute SNPs with null values with the mean across all samples in the marker data set.  
 4. For a 5-fold CV, repeat steps  
 a. Split the data into training (80%) and testing (20%) folds.  
-b. Use glmnet to fit ridge, lasso, and elastic net.
+b. Use glmnet to train and validate ridge, lasso, and elastic net.
 	1. Predict the phenotype value for both training and testing  folds using  λ  within 1 standard error of the minimum obtained by an inner 5-fold CV.  
 	2. Record the appropriate performance metric using the optimal cutoff to optimize the metric.  
 	3. Record the potentially significant SNPs from each method. The significant SNPs are those with coefficients higher than the mean of the absolute value of the coefficients.
 
 	c. Filter SNPs by taking the union of SNPs from the ridge, LASSO, and elastic net.  
 d. Create groups of SNPs using Hierarchical Clustering.  
-e. Utilize filtered SNPs to fit Group Lasso and SGL using R functions grplasso and SGL.
+e. Utilize filtered SNPs to train and validate Group Lasso and SGL using R functions grplasso and SGL.
 	1. Predict the phenotype value for both training and testing folds using  λ  within 1 standard error of the minimum obtained by an inner 5-fold CV.  
 	2. Record the appropriate performance metric using the optimal cutoff to optimize the metric.  
 	3. Take the union of the potentially significant SNPs from both Group Lasso and SGL. The significant SNPs are those with coefficients higher than a cutoff (mean of the absolute value of the coefficients).
