@@ -27,19 +27,16 @@ Cloud Server: TRU Data Science
 #  Data
 
 
-Two  Arabidopsis thaliana  data, AtPolyDB and F1, are used for this study. They are obtained from easygwas website: https://easygwas.ethz.ch/data/public/dataset/view/1/ and https://easygwas.ethz.ch/data/public/dataset/view/42/. The AtPolyDB dataset has 1307 instances with 214051 SNPs (or features) and the F1 data set has 372 samples with 204753 SNPs. Both data sets contain three files: (a) PED file, (b) PHENO file, and (c) MAP file. The chosen phenotypes had three different data type as: (a) Binary, (b) Continuous, and (c) Categorical.
+Two  Arabidopsis thaliana  data, AtPolyDB and F1, are used for this study. They are obtained from easygwas websites: https://easygwas.ethz.ch/data/public/dataset/view/1/ and https://easygwas.ethz.ch/data/public/dataset/view/42/. The AtPolyDB dataset has 1307 instances with 214051 SNPs (or features) and the F1 data set has 372 samples with 204753 SNPs. Both data sets contain three files: (a) PED file, (b) PHENO file, and (c) MAP file. The chosen phenotypes had three different data type as: (a) Binary, (b) Continuous, and (c) Categorical.
 
 #  Step by step implementation
 
 The new pipeline include below steps,
 
 <b>Input:</b>  Genotype .ped file and Phenotype .pheno file  
-1. Re-code the chromosomal nucleotide to numeric values to form a  
-binary marker data followed by creating a design matrix of dimensions n  ×  p.
-2. Remove null values from the phenotype data and match them with  
-marker data.  
-3. Impute SNPs with null values with the mean across all samples in  
-the marker data set.  
+1. Re-code the chromosomal nucleotide to numeric values to form a binary marker data followed by creating a design matrix of dimensions n  ×  p.
+2. Remove null values from the phenotype data and match them with marker data.  
+3. Impute SNPs with null values with the mean across all samples in the marker data set.  
 4. For a 5-fold CV, repeat steps  
 a. Split the data into training (80%) and testing (20%) folds.  
 b. Use glmnet to fit ridge, lasso, and elastic net.
@@ -50,11 +47,8 @@ b. Use glmnet to fit ridge, lasso, and elastic net.
 	c. Filter SNPs by taking the union of SNPs from the ridge, LASSO, and elastic net.  
 d. Create groups of SNPs using Hierarchical Clustering.  
 e. Utilize filtered SNPs to fit Group Lasso and SGL using R functions grplasso and SGL.
-	1. Predict the phenotype value for both training and testing  
-folds using  λ  within 1 standard error of the minimum ob-  
-tained by an inner 5-fold CV.  
-	2. Record the appropriate performance metric using the opti-  
-mal cutoff to optimize the metric.  
+	1. Predict the phenotype value for both training and testing folds using  λ  within 1 standard error of the minimum obtained by an inner 5-fold CV.  
+	2. Record the appropriate performance metric using the optimal cutoff to optimize the metric.  
 	3. Take the union of the potentially significant SNPs from both Group Lasso and SGL. The significant SNPs are those with coefficients higher than a cutoff (mean of the absolute value of the coefficients).
 
 <b>Output:</b>  The significant SNPs (union of selected SNPs from Group LASSO and SGL) for each phenotype
