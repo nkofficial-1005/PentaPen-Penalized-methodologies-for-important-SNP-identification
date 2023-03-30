@@ -34,7 +34,7 @@ Geno[Geno == 'G'] <- 2  # Converting G to 2
 Geno[Geno == 'C'] <- 3  # Converting C to 3
 
 #Convert the phenotype to matrix
-y <- matrix(char.pheno$Rosette_Erect_22) #Change the phenotype accordingly
+y <- matrix(char.pheno$Anthocyanin_22) #Change the phenotype accordingly
 rownames(y) <- char.pheno$IID
 index <- !is.na(y)
 y <- y[index, 1, drop = FALSE]
