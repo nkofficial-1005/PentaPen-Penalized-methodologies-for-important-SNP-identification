@@ -19,6 +19,9 @@ library(gglasso)
 library(caTools)
 library(caret)
 library(tidyverse)
+library(foreach)
+library(doParallel)
+library(grpreg)
 ##############
 # Import data
 Geno <- read.pedfile("genotype.ped") 
