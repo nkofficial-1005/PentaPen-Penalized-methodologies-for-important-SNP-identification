@@ -18,16 +18,15 @@ Key Words: Genomic Wide Association Study  Â·  Single Nucleotide Polymorphism  Â
 
 #  Technologies
 
-Software: R Version 4.2.2
+Software: R Version 4.2.2 and R Version 3.6.3
 
-Operating System: Linux 5.4.0-135-generic x86_64
+Operating Systems: Linux 5.4.0-135-generic x86_64 and Linux 5.4.0-150-generic x86_64
 
-Cloud Server: TRU Data Science
+Cloud Servers: TRU Data Science and Compute Canada
 
 #  Data
 
-
-Two  Arabidopsis thaliana  data, AtPolyDB and F1, are used for this study. They are obtained from easygwas websites: https://easygwas.ethz.ch/data/public/dataset/view/1/ and https://easygwas.ethz.ch/data/public/dataset/view/42/. The AtPolyDB dataset has 1307 samples with 214051 SNPs (or features) and the F1 data set has 372 samples with 204753 SNPs. Both data sets contain three files: (a) PED file, (b) PHENO file, and (c) MAP file. The chosen phenotypes had three different data types: (a) Binary, (b) Continuous, and (c) Categorical.
+Two  Arabidopsis thaliana  data, AtPolyDB and F1, are used for this study. They are obtained from easygwas websites: https://easygwas.ethz.ch/data/public/dataset/view/1/ and https://easygwas.ethz.ch/data/public/dataset/view/42/. The AtPolyDB dataset has 1307 samples with 214051 SNPs (or features) and the F1 data set has 372 samples with 204753 SNPs. Both data sets contain three files: (a) PED file, (b) PHENO file, and (c) MAP file. The chosen phenotypes had three different data types: (a) Binary (Anthocyanin), (b) Continuous (Width and DTF), and (c) Categorical (Germination Days).
 
 #  Step-by-step implementation
 
