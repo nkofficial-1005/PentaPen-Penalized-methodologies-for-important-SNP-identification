@@ -1,4 +1,4 @@
-#  Comparing penalized methodologies for significant SNP identification on whole-genome data
+#  PentaPen: Combining Penalized Models for Identification of Important SNPs on Whole-genome Arabidopsis Thaliana Data
 
 #  Table of content
 
@@ -27,17 +27,17 @@ Cloud Server: TRU Data Science
 #  Data
 
 
-Two  Arabidopsis thaliana  data, AtPolyDB and F1, are used for this study. They are obtained from easygwas websites: https://easygwas.ethz.ch/data/public/dataset/view/1/ and https://easygwas.ethz.ch/data/public/dataset/view/42/. The AtPolyDB dataset has 1307 samples with 214051 SNPs (or features) and the F1 data set has 372 samples with 204753 SNPs. Both data sets contain three files: (a) PED file, (b) PHENO file, and (c) MAP file. The chosen phenotypes had three different data type as: (a) Binary, (b) Continuous, and (c) Categorical.
+Two  Arabidopsis thaliana  data, AtPolyDB and F1, are used for this study. They are obtained from easygwas websites: https://easygwas.ethz.ch/data/public/dataset/view/1/ and https://easygwas.ethz.ch/data/public/dataset/view/42/. The AtPolyDB dataset has 1307 samples with 214051 SNPs (or features) and the F1 data set has 372 samples with 204753 SNPs. Both data sets contain three files: (a) PED file, (b) PHENO file, and (c) MAP file. The chosen phenotypes had three different data types: (a) Binary, (b) Continuous, and (c) Categorical.
 
-#  Step by step implementation
+#  Step-by-step implementation
 
-The new pipeline include below steps,
+The new pipeline includes below steps,
 
 <b>Input:</b>  Genotype .ped file and Phenotype .pheno file  
 1. Re-code the chromosomal nucleotide to numeric values to form a binary marker data followed by creating a design matrix of dimensions n  ×  p.
 2. Remove null values from the phenotype data and match them with marker data.  
 3. Impute SNPs with null values with the mean across all samples in the marker data set.  
-4. For a 5-fold CV, repeat steps  
+4. For a 5-fold CV, repeat the steps  
 a. Split the data into training (80%) and testing (20%) folds.  
 b. Use glmnet to train and validate ridge, lasso, and elastic net.
 	1. Predict the phenotype value for both training and testing  folds using  λ  within 1 standard error of the minimum obtained by an inner 5-fold CV.  
@@ -60,4 +60,4 @@ The authors would like to acknowledge the funding for this research from,
 1. Natural Sciences and Engineering Research Council of Canada (NSERC) awarded to Dr. Jabed Tomal, Department of Mathematics and Statistics, Thompson Rivers University.  
 2. Natural Sciences and Engineering Research Council of Canada (NSERC)  awarded to Dr. Yan Yan, Department of Computing Science, Thompson Rivers University.
 
-The authors also acknowledges Department of Data Science at Thompson Rivers University for hosting the 16GB Linux remote server which is used for computation in this research.
+The authors also acknowledge the Department of Data Science at Thompson Rivers University for hosting the 16GB Linux remote server which is used for computation in this research.
