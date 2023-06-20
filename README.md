@@ -52,12 +52,3 @@ e. Utilize filtered SNPs to train and validate Group Lasso and SGL using R funct
 	3. Take the union of the potentially significant SNPs from both Group Lasso and SGL. The significant SNPs are those with coefficients higher than a cutoff (mean of the absolute value of the coefficients).
 
 <b>Output:</b>  The significant SNPs (union of selected SNPs from Group LASSO and SGL) for each phenotype
-
-#  Acknowledgement
-
-
-The authors would like to acknowledge the funding for this research from,  
-1. Natural Sciences and Engineering Research Council of Canada (NSERC) awarded to Dr. Jabed Tomal, Department of Mathematics and Statistics, Thompson Rivers University.  
-2. Natural Sciences and Engineering Research Council of Canada (NSERC)  awarded to Dr. Yan Yan, Department of Computing Science, Thompson Rivers University.
-
-The authors also acknowledge the Department of Data Science at Thompson Rivers University for hosting the 16GB Linux remote server which is used for computation in this research.
