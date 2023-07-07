@@ -187,7 +187,7 @@ for(i in 1){
   # print(paste(rsq_ridge_train, "rsq_ridge_train"))
 
   #Accuracy
-  print(paste(sum(y_train == as.integer(predictions_train_ridge)) / length(y_train), "Accuracy train ridge"))
+  #print(paste(sum(y_train == as.integer(predictions_train_ridge)) / length(y_train), "Accuracy train ridge"))
 
   #Test set#
   #Predictions
@@ -218,7 +218,7 @@ for(i in 1){
   # print(paste(rsq_ridge_test, "rsq_ridge_test"))
 
   #Accuracy
-  print(paste(sum(y_test == as.integer(predictions_test_ridge)) / length(y_test), "Accuracy test ridge"))
+  #print(paste(sum(y_test == as.integer(predictions_test_ridge)) / length(y_test), "Accuracy test ridge"))
   
   #Lasso
   coef_lasso <- ridge_lasso_elnet[[2]]$coef[-1]
@@ -259,7 +259,7 @@ for(i in 1){
   # print(paste(rsq_lasso_train, "rsq_lasso_train"))
 
   #Accuracy
-  print(paste(sum(y_train == as.integer(predictions_train_lasso)) / length(y_train), "Accuracy train lasso"))
+  #print(paste(sum(y_train == as.integer(predictions_train_lasso)) / length(y_train), "Accuracy train lasso"))
   
   #Test set#
   #Predictions
@@ -290,7 +290,7 @@ for(i in 1){
   # print(paste(rsq_lasso_test, "rsq_lasso_test"))
 
   #Accuracy
-  print(paste(sum(y_test == as.integer(predictions_test_lasso)) / length(y_test), "Accuracy test lasso"))
+  #print(paste(sum(y_test == as.integer(predictions_test_lasso)) / length(y_test), "Accuracy test lasso"))
   ########
   
   #Elastic net
@@ -332,7 +332,7 @@ for(i in 1){
   # print(paste(rsq_elnet_train, "rsq_elnet_train"))
 
   #Accuracy
-  print(paste(sum(y_train == as.integer(predictions_train_elnet)) / length(y_train), "Accuracy train elnet"))
+  #print(paste(sum(y_train == as.integer(predictions_train_elnet)) / length(y_train), "Accuracy train elnet"))
   
   #Test set#
   #Predictions
@@ -363,7 +363,7 @@ for(i in 1){
   # print(paste(rsq_elnet_test, "rsq_elnet_test"))
 
   #Accuracy
-  print(paste(sum(y_test == as.integer(predictions_test_elnet)) / length(y_train), "Accuracy test elnet"))
+  #print(paste(sum(y_test == as.integer(predictions_test_elnet)) / length(y_train), "Accuracy test elnet"))
   ########
   
   #SNP Pooling
@@ -473,7 +473,7 @@ for(i in 1){
   # print(paste(rsq_grplasso_train, "rsq_grplasso_train"))
 
   #Accuracy
-  print(paste(sum(y.train == as.integer(predictions_train_grplasso)) / length(y.train), "Accuracy train grplasso"))
+  #print(paste(sum(y.train == as.integer(predictions_train_grplasso)) / length(y.train), "Accuracy train grplasso"))
   #Using testing set#
   #Predictions
   predictions_test_grplasso <- grp_sgl[[1]]$predictions_test_grplasso
@@ -503,7 +503,7 @@ for(i in 1){
   # print(paste(rsq_grplasso_test, "rsq_grplasso_test"))
 
   #Accuracy
-  print(paste(sum(y.test == as.integer(predictions_test_grplasso)) / length(y.test), "Accuracy test grplasso"))
+  #print(paste(sum(y.test == as.integer(predictions_test_grplasso)) / length(y.test), "Accuracy test grplasso"))
   
   #SGL
   beta <- grp_sgl[[2]]$coef
@@ -544,7 +544,7 @@ for(i in 1){
   # print(paste(rsq_sgl_train, "rsq_sgl_train"))
 
   #Accuracy
-  print(paste(sum(y.train == as.integer(sgl.probabilities.train)) / length(y.train), "Accuracy train sgl"))
+  #print(paste(sum(y.train == as.integer(sgl.probabilities.train)) / length(y.train), "Accuracy train sgl"))
   
   #Using testing set#
   #Predictions
@@ -575,7 +575,7 @@ for(i in 1){
   # print(paste(rsq_sgl_test, "rsq_sgl_test"))
 
   #Accuracy
-  print(paste(sum(y.test == as.integer(sgl.probabilities.test)) / length(y.test), "Accuracy test sgl"))
+  #print(paste(sum(y.test == as.integer(sgl.probabilities.test)) / length(y.test), "Accuracy test sgl"))
   ########
   
   #Final SNPs from the proposed algorithm
@@ -624,7 +624,7 @@ agg_model_predictions_test <- rowMeans(do.call(cbind, list(ridge_lasso_elnet[[1]
 # print(paste(rsq_agg_model_train, "rsq_agg_model_train"))
 
 #Accuracy
-print(paste(sum(y_train == as.integer(agg_model_predictions_train)) / length(y_train), "Accuracy train agg_model"))
+#print(paste(sum(y_train == as.integer(agg_model_predictions_train)) / length(y_train), "Accuracy train agg_model"))
 ########
 
 #Test set
