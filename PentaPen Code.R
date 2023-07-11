@@ -29,7 +29,6 @@ char.pheno <- read.table("phenotypes.pheno", header = TRUE, stringsAsFactors = F
 
 ##############
 # Data Pre-processing
-set.seed(100)
 # Re-code the data in ped file
 Geno[Geno == 'A'] <- 0  # Converting A to 0
 Geno[Geno == 'T'] <- 1  # Converting T to 1
@@ -51,7 +50,7 @@ Geno_y <- Geno[index, ]
 pheno_final <- data.frame(famid = rownames(y), y = y)
 
 df <- merge(Geno_y, pheno_final, by = 'famid')
-df_final <- df[, 7:204760] #comment here what is done
+df_final <- df[, 7:204760] #select the data set consisting of SNPs only
 df_final <- sapply(df_final, as.numeric)
 df_final <- df_final[sample(nrow(df_final)),]
 n <- dim(df_final)[[1]] 
