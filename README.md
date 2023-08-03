@@ -57,20 +57,20 @@ e. Utilize filtered SNPs to train and validate Group Lasso and SGL using R funct
 # Instructions to Run Code
 1. Download all R files and keep them in the same directory.
 2. In _Pre-Processing.R_ file  
-a. Input the Genotype .ped file and Phenotype .pheno file.
+    a. Input the Genotype .ped file and Phenotype .pheno file.
 
-b. Now, Select the appropriate phenotype data type in Line 33.
+    b. Now, Select the appropriate phenotype data type in Line 33.
 
-c. Save the list of objects as PreprocessedData.RData. (Code included)
+    c. Save the list of objects as PreprocessedData.RData. (Code included)
 
 3. In _PentaPenCode.R_ file
-a. Load all libraries and the PreprocessedData. (Code included)
+    a. Load all libraries and the PreprocessedData. (Code included)
 
-b. Now, run the 5-fold CV and parallel computing within the for loop to get the aggregated model (PentaPen).
+    b. Now, run the 5-fold CV and parallel computing within the for loop to get the aggregated model (PentaPen).
 
-(The functions to train five penalized models are defined in _BeforeSNPPool.R_ and _AfterSNPPool.R_ files. They are called during parallel computation.)
+    (The functions to train five penalized models are defined in _BeforeSNPPool.R_ and _AfterSNPPool.R_ files. They are called during parallel computation.)
 
-c. Finally, run the aggregated model to get the final results.
+    c. Finally, run the aggregated model to get the final results.
 
-(Comment out the evaluation metrics according to the chosen phenotype.)
+    (Comment out the evaluation metrics according to the chosen phenotype.)
 
