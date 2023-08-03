@@ -9,7 +9,9 @@
 * [Data](#data)
 
 * [Step by step implementation](#step-by-step-implementation)
-
+  
+* [Instructions to Run Code](#instructions-to-run-code)
+  
 #  Abstract
 
 Genome-Wide Association Study (GWAS) is the discovery of  an association between certain variations in the genetic code (genome) and a certain physical trait (phenotype). Single Nucleotide Polymorphisms (SNPs) are the most abundant form of common simple DNA variants. In bioinformatics studies, one of the most challenging processes to carry out association tests is finding significant SNPs in high-dimensional data. This problem can be potentially solved by feature selection using statistical and machine learning algorithms. An improved penalized-method-based workflow, PentaPen, is  developed to find important SNPs combined with different penalized models. "Penta" and "Pen" are abbreviated for "five" and "penalized models" respectively. PentaPen is a classifier and regressor which is developed for SNP identification. It aims to minimize the value of the loss function while simultaneously optimizing performance metrics. Firstly, all the SNPs of whole-genome SNP data are utilized for training Ridge, LASSO, and Elastic Net. The union of the output SNPs from these three models is taken as the selected SNPs known as SNP Pooling. Secondly, the selected SNPs are sent to train Group LASSO and SGL, and the union of the output SNPs from the two is the final output of the PentaPen. Finally, an aggregated model is developed by combining the predictions of all five penalized models; this model is used to calculate the performance metrics of PentaPen. The proposed workflow aims to enhance the confidence of the selected SNPs by leveraging the beneficial properties of five penalized methodologies. As a result, combining multiple penalized models can improve performance by reducing over-fitting as compared to using one model. The workflow for SNP identification can also increase the confidence in choosing an SNP set as it is more probable to select informative SNPs than using a single penalized model. Hence, the union of SNPs from Group LASSO and SGL allows for further analysis and selection of a reduced number of SNPs since SGL's sparsity group-wise and within-group results in too few or no SNPs.
@@ -51,3 +53,11 @@ e. Utilize filtered SNPs to train and validate Group Lasso and SGL using R funct
 	3. Take the union of the potentially significant SNPs from both Group Lasso and SGL. The significant SNPs are those with coefficients higher than a cutoff (mean of the absolute value of the coefficients).
 
 <b>Output:</b>  The significant SNPs (union of selected SNPs from Group LASSO and SGL) for each phenotype
+
+# Instructions to Run Code
+1. Download all R files and keep them in the same directory.
+2. Input the Genotype .ped file and Phenotype .pheno file in _Pre-Processing.R_ file.
+3. Save the list of objects as PreprocessedData.RData in _Pre-Processing.R_ file. (Code included)
+4. Now load all libraries and the PreprocessedData in _PentaPenCode.R_ file. (Code included)
+5. Finally, run the 5-fold CV and parallel computing within the for loop to get the aggregated model.
+6. The functions to train five penalized models are defined in _BeforeSNPPool.R_ and _AfterSNPPool.R_ files. They are called during parallel computation.
