@@ -56,8 +56,8 @@ e. Utilize filtered SNPs to train and validate Group Lasso and SGL using R funct
 
 # Instructions to Run Code
 1. Download all R files and keep them in the same directory.
-2. In _Pre-Processing.R_ file
-a. Input the Genotype .ped file and Phenotype .pheno file.
+2. In _Pre-Processing.R_ file  
+a. Input the Genotype .ped file and Phenotype .pheno file.  
 b. Now, Select the appropriate phenotype data type in Line 33. 
 c. Save the list of objects as PreprocessedData.RData. (Code included)
 3. In _PentaPenCode.R_ file
