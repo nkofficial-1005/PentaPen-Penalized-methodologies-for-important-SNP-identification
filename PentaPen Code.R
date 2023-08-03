@@ -7,6 +7,7 @@ options(warn=-1)
 ##############
 # Import libraries
 library(dplyr)
+library(trio)
 library(ROCR)
 library(logr)
 library(matrixStats)
@@ -14,6 +15,8 @@ library(Matrix)
 library(glmnet)
 library(SGL)
 library(pROC)
+library(dendextend)
+library(InformationValue)
 library(MLmetrics)
 library(gglasso)
 library(caTools)
@@ -23,38 +26,8 @@ library(foreach)
 library(doParallel)
 library(grpreg)
 ##############
-# Import data
-Geno <- read.pedfile("genotype.ped") 
-char.pheno <- read.table("phenotypes.pheno", header = TRUE, stringsAsFactors = FALSE, sep = " ")
-
-##############
-# Data Pre-processing
-# Re-code the data in ped file
-Geno[Geno == 'A'] <- 0  # Converting A to 0
-Geno[Geno == 'T'] <- 1  # Converting T to 1
-Geno[Geno == 'G'] <- 2  # Converting G to 2
-Geno[Geno == 'C'] <- 3  # Converting C to 3
-
-#Convert the phenotype to matrix
-y <- matrix(char.pheno$Anthocyanin_22) #Change the phenotype accordingly
-rownames(y) <- char.pheno$IID
-index <- !is.na(y)
-y <- y[index, 1, drop = FALSE]
-
-#Imputing SNP null values
-for (j in 1:ncol(Geno)) {
-  Geno[, j] <- ifelse(is.na(Geno[, j]), mean(Geno[, j], na.rm = TRUE), Geno[, 
-                                                                            j])
-}
-Geno_y <- Geno[index, ] 
-pheno_final <- data.frame(famid = rownames(y), y = y)
-
-df <- merge(Geno_y, pheno_final, by = 'famid')
-df_final <- df[, 7:204760] #select the data set consisting of SNPs only
-df_final <- sapply(df_final, as.numeric)
-df_final <- df_final[sample(nrow(df_final)),]
-n <- dim(df_final)[[1]] 
-d <- dim(df_final)[[2]] 
+# Import pre-processed data
+load("~/AtPolyDB Demo(Original) (PLINK)/PreprocessedData.RData")
 
 ##############
 #Create 5 equally size folds
@@ -64,16 +37,16 @@ folds <- cut(seq(1,nrow(df_final)), breaks=5, labels=FALSE)
 #Define performance metrics
 #Use appropriately for phenotype data type
 #comment out in the loop accordingly
-#1. Precision 
+#1. Precision
 precision = function(cm){
   diag(cm) / apply(cm, 2, sum)
 }
 
-#2. Recall 
+#2. Recall
 recall = function(cm){
   diag(cm) / apply(cm, 1, sum)
 }
- 
+
 #3. RMSE
 RMSE = function(y_actual,y_predict){
   sqrt(mean((y_actual-y_predict)^2))
@@ -85,12 +58,13 @@ RSQUARE = function(y_actual,y_predict){
 }
 
 #############
+set.seed(100)
 #Perform 5 fold cross validation and parallel computation
-for(i in 1){
+for(i in 1:folds){
   
   print(paste("Fold:",i))
   #Segement your data by fold using the which() function 
-  train_index <- sample(nrow(df_final), 0.7*nrow(df_final))
+  train_index <- sample(nrow(df_final), 0.8*nrow(df_final))
   train_data <- df_final[train_index,]
   val_data <- df_final[-train_index,]
   x_train <- train_data[,-ncol(train_data)]
@@ -99,52 +73,11 @@ for(i in 1){
   y_test <- val_data[,ncol(val_data)]
   nfolds <- 5
   
+  source("BeforeSNPPool.R")
   #Parallel computing for Ridge, LASSO, Elastic net
   cl <- makeCluster(detectCores() - 1) # create a cluster with all but one core
   registerDoParallel(cl) # register the cluster with foreach
-  ridge_lasso_elnet <- foreach(i=1:3, .packages="glmnet") %dopar% {
-    if(i == 1) { # ridge 
-      cv_ridge <- cv.glmnet(x=x_train,
-                            y=y_train,
-                            alpha=0, nfolds=nfolds)
-      fit_ridge <- glmnet(x=x_train,
-                          y=y_train,
-                          alpha=0, lambda = cv_ridge$lambda.1se)
-      return(list(coef=coef(cv_ridge, s="lambda.min"), # coefficients at lambda with minimum cross-validation error
-                  cv_error=cv_ridge$cvm[cv_ridge$lambda == cv_ridge$lambda.1se], # cross-validation error at minimum lambda
-                  lambda=cv_ridge$lambda,
-                  lambdase=cv_ridge$lambda.1se,
-                  predictions_train_ridge = predict(fit_ridge, s = cv_ridge$lambda.1se, newx = x_train),
-                  predictions_test_ridge = predict(fit_ridge, s = cv_ridge$lambda.1se, newx = x_test),
-                  selected_nsnps=which(coef(cv_ridge, s="lambda.min")!=0)))
-    } else if(i == 2) { # lasso 
-      cv_lasso <- cv.glmnet(x=x_train,
-                            y=y_train,
-                            alpha=1, nfolds=nfolds)
-      fit_lasso <- glmnet(x_train, y_train, alpha=1, 
-                          lambda = cv_lasso$lambda.1se)
-      return(list(coef=coef(cv_lasso, s="lambda.min"), # coefficients at lambda with minimum cross-validation error
-                  cv_error=cv_lasso$cvm[cv_lasso$lambda == cv_lasso$lambda.1se], # cross-validation error at minimum lambda
-                  lambda=cv_lasso$lambda,
-                  lambdase=cv_lasso$lambda.1se,
-                  predictions_train_lasso = predict(fit_lasso, s = cv_lasso$lambda.1se, newx = x_train),
-                  predictions_test_lasso = predict(fit_lasso, s = cv_lasso$lambda.1se, newx = x_test),
-                  selected_nsnps=which(coef(cv_lasso, s="lambda.min")!=0)))
-    } else { # elastic net 
-      cv_enet <- cv.glmnet(x=train_data[,-ncol(train_data)],
-                           y=train_data[,ncol(train_data)],
-                           alpha=0.5, nfolds=nfolds)
-      fit_enet <- glmnet(x_train, y_train, alpha=0.5, 
-                          lambda = cv_enet$lambda.1se)
-      return(list(coef=coef(cv_enet, s="lambda.min"), # coefficients at lambda with minimum cross-validation error
-                  cv_error=cv_enet$cvm[cv_enet$lambda == cv_enet$lambda.1se], # cross-validation error at minimum lambda
-                  lambda=cv_enet$lambda,
-                  lambdase=cv_enet$lambda.1se,
-                  predictions_train_enet = predict(fit_enet, s = cv_enet$lambda.1se, newx = x_train),
-                  predictions_test_enet = predict(fit_enet, s = cv_enet$lambda.1se, newx = x_test),
-                  selected_nsnps=which(coef(cv_enet, s="lambda.min")!=0)))
-    }
-  }
+  ridge_lasso_elnet#(x_train,y_train,nfolds,x_test,y_test)
   stopCluster(cl) # stop the cluster when done
   
   #Results from Parallel Computing of Ridge, LASSO, Elastic net
@@ -184,10 +117,10 @@ for(i in 1){
   # #R-squared
   # rsq_ridge_train <- RSQUARE(y_train, predictions_train_ridge)
   # print(paste(rsq_ridge_train, "rsq_ridge_train"))
-
+  
   #Accuracy
   #print(paste(sum(y_train == as.integer(predictions_train_ridge)) / length(y_train), "Accuracy train ridge"))
-
+  
   #Test set#
   #Predictions
   predictions_test_ridge <- ridge_lasso_elnet[[1]]$predictions_test_ridge
@@ -215,7 +148,7 @@ for(i in 1){
   # #R-squared
   # rsq_ridge_test <- RSQUARE(y_test, predictions_test_ridge)
   # print(paste(rsq_ridge_test, "rsq_ridge_test"))
-
+  
   #Accuracy
   #print(paste(sum(y_test == as.integer(predictions_test_ridge)) / length(y_test), "Accuracy test ridge"))
   
@@ -256,7 +189,7 @@ for(i in 1){
   # #R-squared
   # rsq_lasso_train <- RSQUARE(y_train, predictions_train_lasso)
   # print(paste(rsq_lasso_train, "rsq_lasso_train"))
-
+  
   #Accuracy
   #print(paste(sum(y_train == as.integer(predictions_train_lasso)) / length(y_train), "Accuracy train lasso"))
   
@@ -287,7 +220,7 @@ for(i in 1){
   # #R-squared
   # rsq_lasso_test <- RSQUARE(y_test, predictions_test_lasso)
   # print(paste(rsq_lasso_test, "rsq_lasso_test"))
-
+  
   #Accuracy
   #print(paste(sum(y_test == as.integer(predictions_test_lasso)) / length(y_test), "Accuracy test lasso"))
   ########
@@ -329,7 +262,7 @@ for(i in 1){
   # #R-squared
   # rsq_elnet_train <- RSQUARE(y_train, predictions_train_elnet)
   # print(paste(rsq_elnet_train, "rsq_elnet_train"))
-
+  
   #Accuracy
   #print(paste(sum(y_train == as.integer(predictions_train_elnet)) / length(y_train), "Accuracy train elnet"))
   
@@ -360,7 +293,7 @@ for(i in 1){
   # #R-squared
   # rsq_elnet_test <- RSQUARE(y_test, predictions_test_elnet)
   # print(paste(rsq_elnet_test, "rsq_elnet_test"))
-
+  
   #Accuracy
   #print(paste(sum(y_test == as.integer(predictions_test_elnet)) / length(y_train), "Accuracy test elnet"))
   ########
@@ -368,6 +301,7 @@ for(i in 1){
   #SNP Pooling
   selected_snps_union <- c(selected_snps_ridge, selected_snps_lasso, selected_snps_enet)
   selected_snps_union <- unique(selected_snps_union)
+  #selected_snps_union <- sample(1:length(selected_snps_union), 100) #Comment this out if you want to see the reproducibility of the code in <4GB RAM
   print(paste("Snp Pool",length(selected_snps_union)))
   ##############
   
@@ -400,31 +334,8 @@ for(i in 1){
   #Parallel computing of Group LASSO and SGL
   cl <- makeCluster(detectCores() - 1) # create a cluster with all but one core
   registerDoParallel(cl) # register the cluster with foreach
-  grp_sgl <- foreach(i=1:2, .packages=c("gglasso","SGL")) %dopar% {
-    if(i == 1) { # group lasso
-      cv_glasso <- cv.gglasso(x=Z.train,
-                              y=y.train,
-                              group=grp, nfolds=nfolds)
-      fit_glasso <- gglasso(x=Z.train,
-                              y=y.train,
-                              lambda = cv_glasso$lambda.1se, group = grp)
-      return(list(coef=coef(cv_glasso, s="lambda.min"), # coefficients at lambda with minimum cross-validation error
-                  cv_error=cv_glasso$cvm[cv_glasso$lambda == cv_glasso$lambda.1se], # cross-validation error at minimum lambda
-                  predictions_train_grplasso=predict(fit_glasso, s = cv_glasso$lambda.1se,
-                                                     newx = Z.train),
-                  predictions_test_grplasso=predict(fit_glasso, s = cv_glasso$lambda.1se,
-                                                       newx = Z.test),
-                  selected_snps=which(coef(cv_glasso, s="lambda.min")!=0))) # selected SNPs at minimum lambda
-    } else { # sparse group lasso
-      cv_sgl <- cvSGL(data = data.SGL, index = grp, nfold=nfolds)
-      sgl_fit <- SGL(data = data.SGL, index = grp)
-      return(list(coef=cv_sgl$fit$beta[,which.min(cv_sgl$lambdas)],#coef(cv_sgl, s=which.min(cv_sgl$lambdas)), # coefficients at lambda with minimum cross-validation error
-                  lambda=which.min(cv_sgl$lambdas),
-                  lam=cv_sgl$lambdas,
-                  sgl.probabilities.train=predictSGL(sgl_fit, lam = which.min(cv_sgl$lambdas), newX = Z.train_sgl),
-                  sgl.probabilities.test =predictSGL(sgl_fit, lam = which.min(cv_sgl$lambdas), newX = Z.test_sgl)))
-    }
-  }
+  source("AfterSNPPool.R")
+  grp_sgl
   stopCluster(cl) # stop the cluster when done
   
   #Results from parallel computation of Group LASSO and SGL
@@ -446,7 +357,7 @@ for(i in 1){
   #Using training set#
   #Predictions
   predictions_train_grplasso <- grp_sgl[[1]]$predictions_train_grplasso
-
+  
   #Precision
   # cm_grplasso = as.matrix(table(Actual = y.train, Predicted = predictions_train_grplasso))
   # precision_grplasso_train <- precision(cm_grplasso)
@@ -470,7 +381,7 @@ for(i in 1){
   # #R-squared
   # rsq_grplasso_train <- RSQUARE(y.train, predictions_train_grplasso)
   # print(paste(rsq_grplasso_train, "rsq_grplasso_train"))
-
+  
   #Accuracy
   #print(paste(sum(y.train == as.integer(predictions_train_grplasso)) / length(y.train), "Accuracy train grplasso"))
   #Using testing set#
@@ -500,7 +411,7 @@ for(i in 1){
   # #R-squared
   # rsq_grplasso_test <- RSQUARE(y.test, predictions_test_grplasso)
   # print(paste(rsq_grplasso_test, "rsq_grplasso_test"))
-
+  
   #Accuracy
   #print(paste(sum(y.test == as.integer(predictions_test_grplasso)) / length(y.test), "Accuracy test grplasso"))
   
@@ -517,7 +428,7 @@ for(i in 1){
   #Using training set#
   #Predictions
   sgl.probabilities.train <- grp_sgl[[2]]$sgl.probabilities.train
-    
+  
   #Precision
   # cm_sgl = as.matrix(table(Actual = y.train, Predicted = sgl.probabilities.train))
   # precision_sgl_train <- precision(cm_sgl)
@@ -541,14 +452,14 @@ for(i in 1){
   # #R-squared
   # rsq_sgl_train <- RSQUARE(y.train, sgl.probabilities.train)
   # print(paste(rsq_sgl_train, "rsq_sgl_train"))
-
+  
   #Accuracy
   #print(paste(sum(y.train == as.integer(sgl.probabilities.train)) / length(y.train), "Accuracy train sgl"))
   
   #Using testing set#
   #Predictions
   sgl.probabilities.test <- grp_sgl[[2]]$sgl.probabilities.test
-    
+  
   #Precision
   # cm_sgl = as.matrix(table(Actual = y.test, Predicted = sgl.probabilities.test))
   # precision_sgl_test <- precision(cm_sgl)
@@ -572,7 +483,7 @@ for(i in 1){
   # #R-squared
   # rsq_sgl_test <- RSQUARE(y.test, sgl.probabilities.test)
   # print(paste(rsq_sgl_test, "rsq_sgl_test"))
-
+  
   #Accuracy
   #print(paste(sum(y.test == as.integer(sgl.probabilities.test)) / length(y.test), "Accuracy test sgl"))
   ########
@@ -585,10 +496,10 @@ for(i in 1){
 
 # create aggregated model by averaging predictions from individual models
 agg_model_predictions_train <- rowMeans(do.call(cbind, list(ridge_lasso_elnet[[1]]$predictions_train_ridge, 
-                                          ridge_lasso_elnet[[2]]$predictions_train_lasso, 
-                                          ridge_lasso_elnet[[3]]$predictions_train_enet,
-                                          grp_sgl[[1]]$predictions_train_grplasso,
-                                          grp_sgl[[2]]$sgl.probabilities.train)))
+                                                            ridge_lasso_elnet[[2]]$predictions_train_lasso, 
+                                                            ridge_lasso_elnet[[3]]$predictions_train_enet,
+                                                            grp_sgl[[1]]$predictions_train_grplasso,
+                                                            grp_sgl[[2]]$sgl.probabilities.train)))
 
 agg_model_predictions_test <- rowMeans(do.call(cbind, list(ridge_lasso_elnet[[1]]$predictions_test_ridge, 
                                                            ridge_lasso_elnet[[2]]$predictions_test_lasso, 
@@ -603,7 +514,7 @@ agg_model_predictions_test <- rowMeans(do.call(cbind, list(ridge_lasso_elnet[[1]
 # precision_agg_model_train <- precision(cm_agg_model)
 # print(paste(mean(precision_agg_model_train), "precision_agg_model_train"))
 # 
-# #Recall
+#Recall
 # recall_agg_model_train <- recall(cm_agg_model)
 # print(paste(mean(recall_agg_model_train), "recall_agg_model_train"))
 # 
