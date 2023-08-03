@@ -77,7 +77,7 @@ for(i in 1:folds){
   #Parallel computing for Ridge, LASSO, Elastic net
   cl <- makeCluster(detectCores() - 1) # create a cluster with all but one core
   registerDoParallel(cl) # register the cluster with foreach
-  ridge_lasso_elnet#(x_train,y_train,nfolds,x_test,y_test)
+  ridge_lasso_elnet #Function to run Ridge, LASSO, and Elastic Net in parallel
   stopCluster(cl) # stop the cluster when done
   
   #Results from Parallel Computing of Ridge, LASSO, Elastic net
@@ -335,7 +335,7 @@ for(i in 1:folds){
   cl <- makeCluster(detectCores() - 1) # create a cluster with all but one core
   registerDoParallel(cl) # register the cluster with foreach
   source("AfterSNPPool.R")
-  grp_sgl
+  grp_sgl #Function to run Group LASSO and SGL in parallel
   stopCluster(cl) # stop the cluster when done
   
   #Results from parallel computation of Group LASSO and SGL
