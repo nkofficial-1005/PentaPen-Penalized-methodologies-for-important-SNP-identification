@@ -58,7 +58,6 @@ RSQUARE = function(y_actual,y_predict){
 }
 
 #############
-set.seed(100)
 #Perform 5 fold cross validation and parallel computation
 for(i in 1:folds){
   
