@@ -14,6 +14,8 @@
   
 * [Instructions to Run Code](#instructions-to-run-code)
   
+* [License](#license)
+  
 * [Contact](#contact)
   
 #  Abstract
