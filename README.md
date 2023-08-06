@@ -76,8 +76,8 @@ e. Utilize filtered SNPs to train and validate Group Lasso and SGL using R funct
 ## Instructions to Run Code
 1. Download all R files ([Pre-Processing.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/Pre-Processing.R), [BeforeSNPPool.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/BeforeSNPPool.R), [AfterSNPPool.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/AfterSNPPool.R), and [PentaPen Code.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/PentaPen%20Code.R)) and keep them in the same directory.
 2. For both Arabidopsis thaliana data, follow the following instructions for identifying important SNPs.
-- In [Pre-Processing.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/Pre-Processing.R) file  
-    - Input the Genotype .ped file and Phenotype .pheno file using the following syntax.
+   - In [Pre-Processing.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/Pre-Processing.R) file
+     - Input the Genotype .ped file and Phenotype .pheno file using the following syntax.
       ```r
       Geno <- read.pedfile("genotype.ped")
       char.pheno <- read.table("phenotypes.pheno", header = TRUE, stringsAsFactors = FALSE, sep = " ")
@@ -93,7 +93,7 @@ e. Utilize filtered SNPs to train and validate Group Lasso and SGL using R funct
       save(list = ls(),file = "PreprocessedData.RData")
       ```
 
-- In [PentaPen Code.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/PentaPen%20Code.R) file
+  - In [PentaPen Code.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/PentaPen%20Code.R) file
     - Load all libraries.
       
     - Load the PreprocessedData.
