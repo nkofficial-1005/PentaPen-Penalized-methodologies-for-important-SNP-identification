@@ -2,9 +2,9 @@
 
 ##  Table of content
 
-* [Abstract](#abstract)
+- [Abstract](#abstract)
   
-- [Glossary](#glossary)
+* [Glossary](#glossary)
 
 * [Prerequisites](#prerequisites)
   
