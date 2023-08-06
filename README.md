@@ -82,9 +82,15 @@ e. Utilize filtered SNPs to train and validate Group Lasso and SGL using R funct
       char.pheno <- read.table("phenotypes.pheno", header = TRUE, stringsAsFactors = FALSE, sep = " ")
       ```
 
-    - Now, select the appropriate phenotype data type in Line 33.
+    - Now, select the appropriate phenotype data type using the following syntax.
+      ```r
+      y <- matrix(char.pheno$Anthocyanin_22) #Change the phenotype accordingly
+      ```
 
-    - Save the list of objects as PreprocessedData.RData. (Code included)
+    - Save the list of objects as per the following code.
+      ```r
+      save(list = ls(),file = "PreprocessedData.RData")
+      ```
 
 3. In _PentaPenCode.R_ file
     - Load all libraries and the PreprocessedData. (Code included)
