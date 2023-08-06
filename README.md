@@ -98,5 +98,7 @@ e. Utilize filtered SNPs to train and validate Group Lasso and SGL using R funct
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 # Contact
 You can ask questions to [Nikita Kohli](mailto:nikita.datascience@gmail.com).
