@@ -94,7 +94,7 @@ e. Utilize filtered SNPs to train and validate Group Lasso and SGL using R funct
 
     (Comment out the evaluation metrics according to the chosen phenotype.)
 
-# LICENSE
+# License
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
