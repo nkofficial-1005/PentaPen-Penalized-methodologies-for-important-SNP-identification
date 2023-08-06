@@ -74,7 +74,7 @@ e. Utilize filtered SNPs to train and validate Group Lasso and SGL using R funct
 <b>Output:</b>  The significant SNPs (union of selected SNPs from Group LASSO and SGL) for each phenotype
 
 ## Instructions to Run Code
-1. Download all R files and keep them in the same directory.
+1. Download all R files ([Pre-Processing.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/Pre-Processing.R), [BeforeSNPPool.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/BeforeSNPPool.R), [AfterSNPPool.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/AfterSNPPool.R), and [PentaPen Code.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/PentaPen%20Code.R)) and keep them in the same directory.
 2. In [Pre-Processing.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/Pre-Processing.R) file  
     - Input the Genotype .ped file and Phenotype .pheno file using the following syntax.
       ```r
