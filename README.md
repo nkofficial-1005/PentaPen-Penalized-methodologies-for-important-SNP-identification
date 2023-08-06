@@ -18,13 +18,13 @@
   
 * [Contact](#contact)
   
-#  Abstract
+##  Abstract
 
 Genome-Wide Association Study (GWAS) is the discovery of  an association between certain variations in the genetic code (genome) and a certain physical trait (phenotype). Single Nucleotide Polymorphisms (SNPs) are the most abundant form of common simple DNA variants. In bioinformatics studies, one of the most challenging processes to carry out association tests is finding significant SNPs in high-dimensional data. This problem can be potentially solved by feature selection using statistical and machine learning algorithms. An improved penalized-method-based workflow, PentaPen, is  developed to find important SNPs combined with different penalized models. "Penta" and "Pen" are abbreviated for "five" and "penalized models" respectively. PentaPen is a classifier and regressor which is developed for SNP identification. It aims to minimize the value of the loss function while simultaneously optimizing performance metrics. Firstly, all the SNPs of whole-genome SNP data are utilized for training Ridge, LASSO, and Elastic Net. The union of the output SNPs from these three models is taken as the selected SNPs known as SNP Pooling. Secondly, the selected SNPs are sent to train Group LASSO and SGL, and the union of the output SNPs from the two is the final output of the PentaPen. Finally, an aggregated model is developed by combining the predictions of all five penalized models; this model is used to calculate the performance metrics of PentaPen. The proposed workflow aims to enhance the confidence of the selected SNPs by leveraging the beneficial properties of five penalized methodologies. As a result, combining multiple penalized models can improve performance by reducing over-fitting as compared to using one model. The workflow for SNP identification can also increase the confidence in choosing an SNP set as it is more probable to select informative SNPs than using a single penalized model. Hence, the union of SNPs from Group LASSO and SGL allows for further analysis and selection of a reduced number of SNPs since SGL's sparsity group-wise and within-group results in too few or no SNPs.
 
 Key Words: Genomic Wide Association Study  ·  Single Nucleotide Polymorphism  ·  Feature Selection  ·  Machine Learning  ·  High Dimensional Data.
 
-# Terminology
+### Terminology
 
 * SNP - Single Nucleotide Polymorphisms
 * GWAS - Genome-Wide Association Studies
@@ -39,7 +39,7 @@ Key Words: Genomic Wide Association Study  ·  Single Nucleotide Polymorphism  �
 * LMM - Linear Mixed Model
 * GLM - Generalized Linear Model
 
-# Prerequisites
+## Prerequisites
 
 Software: R Version 4.2.2 and R Version 3.6.3
 
@@ -47,11 +47,11 @@ Operating Systems: Linux 5.4.0-135-generic x86_64 and Linux 5.4.0-150-generic x8
 
 Cloud Servers: TRU Data Science and Compute Canada
 
-#  Data
+##  Data
 
 Two  Arabidopsis thaliana  data, AtPolyDB and F1, are used for this study. They are obtained from easygwas websites: https://easygwas.ethz.ch/data/public/dataset/view/1/ and https://easygwas.ethz.ch/data/public/dataset/view/42/. The AtPolyDB dataset has 1307 samples with 214051 SNPs (or features) and the F1 data set has 372 samples with 204753 SNPs. Both data sets contain three files: (a) PED file, (b) PHENO file, and (c) MAP file. The chosen phenotypes had three different data types: (a) Binary (Anthocyanin), (b) Continuous (Width and DTF), and (c) Categorical (Germination Days).
 
-#  Methodology
+##  Methodology
 
 The new pipeline includes below steps,
 
@@ -75,7 +75,7 @@ e. Utilize filtered SNPs to train and validate Group Lasso and SGL using R funct
 
 <b>Output:</b>  The significant SNPs (union of selected SNPs from Group LASSO and SGL) for each phenotype
 
-# Instructions to Run Code
+## Instructions to Run Code
 1. Download all R files and keep them in the same directory.
 2. In _Pre-Processing.R_ file  
     a. Input the Genotype .ped file and Phenotype .pheno file.
@@ -94,11 +94,11 @@ e. Utilize filtered SNPs to train and validate Group Lasso and SGL using R funct
 
     (Comment out the evaluation metrics according to the chosen phenotype.)
 
-# License
+## License
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# Contact
+### Contact
 You can ask questions to [Nikita Kohli](mailto:nikita.datascience@gmail.com).
