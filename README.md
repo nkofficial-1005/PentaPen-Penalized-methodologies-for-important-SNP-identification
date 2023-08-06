@@ -76,7 +76,7 @@ e. Utilize filtered SNPs to train and validate Group Lasso and SGL using R funct
 ## Instructions to Run Code
 1. Download all R files ([Pre-Processing.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/Pre-Processing.R), [BeforeSNPPool.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/BeforeSNPPool.R), [AfterSNPPool.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/AfterSNPPool.R), and [PentaPen Code.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/PentaPen%20Code.R)) and keep them in the same directory.
 2. For both Arabidopsis thaliana data, follow the following instructions for identifying important SNPs.
-3. In [Pre-Processing.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/Pre-Processing.R) file  
+- In [Pre-Processing.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/Pre-Processing.R) file  
     - Input the Genotype .ped file and Phenotype .pheno file using the following syntax.
       ```r
       Geno <- read.pedfile("genotype.ped")
@@ -93,8 +93,13 @@ e. Utilize filtered SNPs to train and validate Group Lasso and SGL using R funct
       save(list = ls(),file = "PreprocessedData.RData")
       ```
 
-4. In [PentaPen Code.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/PentaPen%20Code.R) file
-    - Load all libraries and the PreprocessedData. (Code included)
+- In [PentaPen Code.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/PentaPen%20Code.R) file
+    - Load all libraries.
+      
+    - Load the PreprocessedData.
+      ```r
+      load("~/AtPolyDB Demo(Original) (PLINK)/PreprocessedData.RData")
+      ```
 
     - Now, run the 5-fold CV and parallel computing within the for loop to get the aggregated model (PentaPen).
     (The functions to train five penalized models are defined in [BeforeSNPPool.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/BeforeSNPPool.R) and [AfterSNPPool.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/AfterSNPPool.R) files. They are called during parallel computation.)
