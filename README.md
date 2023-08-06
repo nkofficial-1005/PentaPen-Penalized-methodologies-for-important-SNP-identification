@@ -24,7 +24,7 @@ Genome-Wide Association Study (GWAS) is the discovery of  an association between
 
 Key Words: Genomic Wide Association Study  ·  Single Nucleotide Polymorphism  ·  Feature Selection  ·  Machine Learning  ·  High Dimensional Data.
 
-### Terminology
+### Glossary
 
 * SNP - Single Nucleotide Polymorphisms
 * GWAS - Genome-Wide Association Studies
