@@ -22,18 +22,18 @@ Key Words: Genomic Wide Association Study  Â·  Single Nucleotide Polymorphism  Â
 
 # Terminology
 
-* SNP - Single Nucleotide Polymorphisms\\
-* GWAS - Genome-Wide Association Studies\\
-LASSO & Least Absolute Shrinkage and Selection Operator\\
-SGL & Sparse Group LASSO\\
-TASSEL & Trait Analysis by aSSociation, Evolution and Linkage\\
-GAPIT &  Genome Association and Prediction Integrated Tool\\
-DTF &  Days to first open flower\\
-LD &  Linkage Disequilibrium\\
-CV & Cross-validation\\
-ML & Machine Learning\\
-LMM & Linear Mixed Model\\
-GLM & Generalized Linear Model
+* SNP - Single Nucleotide Polymorphisms
+* GWAS - Genome-Wide Association Studies
+* LASSO - Least Absolute Shrinkage and Selection Operator
+* SGL - Sparse Group LASSO
+* TASSEL - Trait Analysis by aSSociation, Evolution and Linkage
+* GAPIT -  Genome Association and Prediction Integrated Tool
+* DTF -  Days to first open flower
+* LD -  Linkage Disequilibrium
+* CV - Cross-validation
+* ML - Machine Learning
+* LMM - Linear Mixed Model
+* GLM - Generalized Linear Model
 
 # Prerequisites
 
