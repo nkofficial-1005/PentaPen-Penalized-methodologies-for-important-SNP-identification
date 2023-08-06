@@ -92,7 +92,7 @@ e. Utilize filtered SNPs to train and validate Group Lasso and SGL using R funct
       save(list = ls(),file = "PreprocessedData.RData")
       ```
 
-3. In _PentaPenCode.R_ file
+3. In [PentaPen Code.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/PentaPen%20Code.R) file
     - Load all libraries and the PreprocessedData. (Code included)
 
     - Now, run the 5-fold CV and parallel computing within the for loop to get the aggregated model (PentaPen).
