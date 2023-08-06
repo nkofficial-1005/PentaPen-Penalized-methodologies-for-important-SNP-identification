@@ -98,9 +98,9 @@ e. Utilize filtered SNPs to train and validate Group Lasso and SGL using R funct
       load("~/AtPolyDB Demo(Original) (PLINK)/PreprocessedData.RData")
       ```
       - Now, run the 5-fold CV and parallel computing within the for loop to get the aggregated model (PentaPen).
-        (The functions to train five penalized models are defined in [BeforeSNPPool.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/BeforeSNPPool.R) and [AfterSNPPool.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/AfterSNPPool.R) files. They are called during parallel computation.)
+        The functions to train five penalized models are defined in [BeforeSNPPool.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/BeforeSNPPool.R) and [AfterSNPPool.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/AfterSNPPool.R) files. They are called during parallel computation.
      - Finally, run the aggregated model to get the final results.
-       (Comment out the evaluation metrics according to the chosen phenotype.)
+       <!--(Comment out the evaluation metrics according to the chosen phenotype.)-->
 
 ## License
 
