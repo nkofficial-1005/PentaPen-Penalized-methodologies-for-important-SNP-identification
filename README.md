@@ -82,30 +82,25 @@ e. Utilize filtered SNPs to train and validate Group Lasso and SGL using R funct
       Geno <- read.pedfile("genotype.ped")
       char.pheno <- read.table("phenotypes.pheno", header = TRUE, stringsAsFactors = FALSE, sep = " ")
       ```
-
-    - Now, select the appropriate phenotype data type using the following syntax.
+      - Now, select the appropriate phenotype data type using the following syntax.
       ```r
       y <- matrix(char.pheno$Anthocyanin_22) #Change the phenotype accordingly
       ```
-
-    - Save the list of objects as per the following code.
+      - Save the list of objects as per the following code.
       ```r
       save(list = ls(),file = "PreprocessedData.RData")
       ```
 
-  - In [PentaPen Code.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/PentaPen%20Code.R) file
-    - Load all libraries.
-      
-    - Load the PreprocessedData.
+   - In [PentaPen Code.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/PentaPen%20Code.R) file
+     - Load all libraries.
+     - Load the PreprocessedData.
       ```r
       load("~/AtPolyDB Demo(Original) (PLINK)/PreprocessedData.RData")
       ```
-
-    - Now, run the 5-fold CV and parallel computing within the for loop to get the aggregated model (PentaPen).
-    (The functions to train five penalized models are defined in [BeforeSNPPool.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/BeforeSNPPool.R) and [AfterSNPPool.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/AfterSNPPool.R) files. They are called during parallel computation.)
-
-    - Finally, run the aggregated model to get the final results.
-    (Comment out the evaluation metrics according to the chosen phenotype.)
+      - Now, run the 5-fold CV and parallel computing within the for loop to get the aggregated model (PentaPen).
+        (The functions to train five penalized models are defined in [BeforeSNPPool.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/BeforeSNPPool.R) and [AfterSNPPool.R](https://github.com/nkofficial-1005/PentaPen-Penalized-methodologies-for-important-SNP-identification/blob/main/AfterSNPPool.R) files. They are called during parallel computation.)
+     - Finally, run the aggregated model to get the final results.
+       (Comment out the evaluation metrics according to the chosen phenotype.)
 
 ## License
 
