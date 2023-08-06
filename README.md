@@ -4,7 +4,7 @@
 
 * [Abstract](#abstract)
   
-* [Terminology](#terminology)
+* [Glossary](#glossary)
 
 * [Prerequisites](#prerequisites)
   
