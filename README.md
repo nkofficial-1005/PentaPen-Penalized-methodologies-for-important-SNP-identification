@@ -4,7 +4,7 @@
 
 * [Abstract](#abstract)
   
-* [Glossary](#glossary)
+- [Glossary](#glossary)
 
 * [Prerequisites](#prerequisites)
   
