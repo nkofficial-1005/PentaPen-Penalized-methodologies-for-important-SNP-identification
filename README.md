@@ -6,11 +6,11 @@
 
 * [Prerequisites](#prerequisites)
   
-** [Data](#data)
-
 * [Methodology](#methodology)
   
 * [Instructions to Run Code](#instructions-to-run-code)
+  
+* [Contact](#contact)
   
 #  Abstract
 
@@ -70,6 +70,8 @@ e. Utilize filtered SNPs to train and validate Group Lasso and SGL using R funct
 
     b. Now, run the 5-fold CV and parallel computing within the for loop to get the aggregated model (PentaPen).
 
+# Contact
+You can ask questions to [Nikita Kohli](mailto:nikita.datascience@gmail.com)
     (The functions to train five penalized models are defined in _BeforeSNPPool.R_ and _AfterSNPPool.R_ files. They are called during parallel computation.)
 
     c. Finally, run the aggregated model to get the final results.
