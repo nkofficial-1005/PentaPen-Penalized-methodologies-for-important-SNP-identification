@@ -5,17 +5,16 @@
 - [Abstract](#abstract)
   * [Glossary](#glossary)
 
-* [Prerequisites](#prerequisites)
+- [Prerequisites](#prerequisites)
+  * [Data](#data)
   
-* [Data](#data)
+- [Methodology](#methodology)
   
-* [Methodology](#methodology)
+- [Instructions to Run Code](#instructions-to-run-code)
   
-* [Instructions to Run Code](#instructions-to-run-code)
+- [License](#license)
   
-* [License](#license)
-  
-* [Contact](#contact)
+- [Contact](#contact)
   
 ##  Abstract
 
@@ -46,7 +45,7 @@ Operating Systems: Linux 5.4.0-135-generic x86_64 and Linux 5.4.0-150-generic x8
 
 Cloud Servers: TRU Data Science and Compute Canada
 
-##  Data
+###  Data
 
 Two  Arabidopsis thaliana  data, AtPolyDB and F1, are used for this study. They are obtained from easygwas websites: https://easygwas.ethz.ch/data/public/dataset/view/1/ and https://easygwas.ethz.ch/data/public/dataset/view/42/. The AtPolyDB dataset has 1307 samples with 214051 SNPs (or features) and the F1 data set has 372 samples with 204753 SNPs. Both data sets contain three files: (a) PED file, (b) PHENO file, and (c) MAP file. The chosen phenotypes had three different data types: (a) Binary (Anthocyanin), (b) Continuous (Width and DTF), and (c) Categorical (Germination Days).
 
@@ -99,5 +98,5 @@ e. Utilize filtered SNPs to train and validate Group Lasso and SGL using R funct
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-### Contact
+## Contact
 You can ask questions to [Nikita Kohli](mailto:nikita.datascience@gmail.com).
